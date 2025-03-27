@@ -39,7 +39,7 @@ const Footer = () => {
         </div>
         
         <div className="mt-8 pt-6 border-t border-primary/10 text-center text-text-secondary text-sm">
-          <p>© {currentYear} YourName. All rights reserved.</p>
+          <p>© {currentYear} SegmaDesigns. All rights reserved.</p>
         </div>
       </div>
     </footer>
