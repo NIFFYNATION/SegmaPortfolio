@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "poppins", "sans-serif";
+
+  /* Light mode colors (default) - Blue and White theme */
+  --color-primary: #2563eb;        /* Medium blue */
+  --color-primary-light: #60a5fa;  /* Light blue */
+  --color-secondary: #1e40af;      /* Dark blue */
+  --color-secondary-light: #3b82f6; /* Medium-light blue */
+  
+  /* Text colors */
+  --color-text-primary: #1e293b;   /* Dark slate blue for text */
+  --color-text-secondary: #64748b; /* Slate blue for secondary text */
+  
+  /* Background colors */
+  --color-background: #ffffff;     /* White background */
+  --color-background-alt: #f8fafc; /* Very light blue background */
+  
+  /* Accent colors */
+  --color-accent: #3b82f6;         /* Medium blue accent */
+  --color-accent-light: #60a5fa;   /* Light blue accent */
+
+  /* Dark mode colors - Dark blue theme */
+  --color-dark-primary: #60a5fa;   /* Light blue */
+  --color-dark-secondary: #3b82f6; /* Medium blue */
+  --color-dark-text-primary: #f8fafc; /* Very light blue/white for text */
+  --color-dark-text-secondary: #cbd5e1; /* Light slate for secondary text */
+  --color-dark-background: #0f172a; /* Very dark blue background */
+  --color-dark-background-alt: #1e293b; /* Dark slate blue background */
+  --color-dark-accent: #3b82f6;    /* Medium blue accent */
+  --color-dark-accent-light: #60a5fa; /* Light blue accent */
+}
+
+/* Dark mode overrides */
+.dark {
+  --color-primary: var(--color-dark-primary);
+  --color-secondary: var(--color-dark-secondary);
+  --color-text-primary: var(--color-dark-text-primary);
+  --color-text-secondary: var(--color-dark-text-secondary);
+  --color-background: var(--color-dark-background);
+  --color-background-alt: var(--color-dark-background-alt);
+  --color-accent: var(--color-dark-accent);
+  --color-accent-light: var(--color-dark-accent-light);
+}
