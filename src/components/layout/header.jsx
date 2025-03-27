@@ -1,16 +1,23 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { FaBars, FaTimes } from 'react-icons/fa';
 
 const Header = ({ darkMode, toggleDarkMode }) => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   
+  const handleScroll = () => {
+    const scrollPosition = window.scrollY;
+    setIsScrolled(scrollPosition > 10);
+  };
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  // Add event listener for scroll
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      setIsScrolled(scrollPosition > 10);
-    };
-    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -34,6 +41,7 @@ const Header = ({ darkMode, toggleDarkMode }) => {
           SegmaDesigns
         </Link>
         
+        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
           {navLinks.map((link) => (
             <Link
@@ -53,6 +61,30 @@ const Header = ({ darkMode, toggleDarkMode }) => {
           ))}
         </nav>
         
+      
+
+        {/* Mobile Navigation */}
+        {menuOpen && (
+          <div className="absolute top-full left-0 w-full bg-background/90 backdrop-blur-sm shadow-sm md:hidden">
+            <nav className="flex flex-col items-start ml-4 space-y-4 py-4">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  onClick={toggleMenu} // Close menu on link click
+                  className={`font-medium transition-colors hover:text-accent ${
+                    location.pathname === link.path 
+                      ? 'text-accent' 
+                      : 'text-text-primary'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
+        )}
+
         <div className="flex items-center space-x-4">
           <button 
             onClick={toggleDarkMode}
@@ -65,15 +97,15 @@ const Header = ({ darkMode, toggleDarkMode }) => {
               <span>🌙</span> // Moon icon for dark mode
             )}
           </button>
-          
-          {/* Mobile menu button */}
-          <button className="md:hidden p-2">
-            <span className="sr-only">Open menu</span>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
         </div>
+          {/* Mobile Menu Button */}
+          <button 
+          className="md:hidden p-2"
+          onClick={toggleMenu}
+          aria-label="Toggle menu"
+        >
+          {menuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+        </button> 
       </div>
     </header>
   );
