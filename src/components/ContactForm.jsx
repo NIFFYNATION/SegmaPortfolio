@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
+import emailjs from '@emailjs/browser';
 
 const ContactForm = () => {
+  const form = useRef();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -50,9 +52,27 @@ const ContactForm = () => {
     setIsSubmitting(true);
     
     try {
-      // Here you would integrate with EmailJS, Formspree, or your backend
+      // EmailJS integration
+      // Replace these with your actual EmailJS service, template, and user IDs
+      const serviceId = 'service_31vddrf';
+      const templateId = 'template_uy3qsba';
+      const publicKey = 'kIruyMvzmRBlPyAm0';
       
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        message: formData.message,
+        to_name: 'Seriki Oluwagbenga', // The recipient's name
+      };
+      
+      const response = await emailjs.send(
+        serviceId,
+        templateId,
+        templateParams,
+        publicKey
+      );
+      
+      console.log('SUCCESS!', response.status, response.text);
       
       // Reset form after successful submission
       setFormData({ name: '', email: '', message: '' });
@@ -64,7 +84,7 @@ const ContactForm = () => {
       }, 5000);
       
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error('FAILED...', error);
       setErrors({ submit: 'Failed to send message. Please try again.' });
     } finally {
       setIsSubmitting(false);
@@ -92,7 +112,7 @@ const ContactForm = () => {
         </div>
       )}
       
-      <form onSubmit={handleSubmit}>
+      <form ref={form} onSubmit={handleSubmit}>
         <div className="mb-4">
           <label htmlFor="name" className="block mb-1 font-medium">
             Name

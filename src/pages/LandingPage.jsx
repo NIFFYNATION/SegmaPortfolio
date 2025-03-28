@@ -5,6 +5,26 @@ import CardSection from '../components/CardSection';
 import { Link } from 'react-router-dom';
 
 const LandingPage = () => {
+  // Add a ref to the container
+  const containerRef = useRef(null);
+  
+  // Add custom scroll behavior with useEffect
+  useEffect(() => {
+    // Apply the CSS properties directly to ensure they work
+    if (containerRef.current) {
+      containerRef.current.style.scrollSnapType = "y mandatory";
+      containerRef.current.style.overflowY = "scroll";
+      containerRef.current.style.height = "100vh";
+    }
+    
+    // Get all section elements
+    const sections = document.querySelectorAll('.snap-section');
+    sections.forEach(section => {
+      section.style.scrollSnapAlign = "start";
+      section.style.minHeight = "100vh";
+    });
+  }, []);
+
   // sections content
   const sections = [
     { 
@@ -220,14 +240,14 @@ const LandingPage = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen" ref={containerRef}>
       {/* Main container with vertical scroll */}
-      <div className="snap-y snap-mandatory">
+      <div>
         {sections.map((section) => (
           <motion.div 
             key={section.id}
             id={section.id}
-            className="min-h-screen snap-start py-16 flex items-center"
+            className="py-16 flex items-center snap-section"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.7 }}
