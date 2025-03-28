@@ -247,7 +247,7 @@ const LandingPage = () => {
           <motion.div 
             key={section.id}
             id={section.id}
-            className="py-16 flex items-center snap-section"
+            className="py- flex items-center snap-section"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.7 }}
